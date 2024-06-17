@@ -1,0 +1,29 @@
+- name: Deploy registry
+  hosts: localhost
+  become: yes
+  become_method: sudo 
+  tasks:
+    #- name: Deploy registry based on container
+    #  community.docker.docker_container:
+    - name: Install podman
+      ansible.builtin.yum:
+        name: podman
+        state: latest
+
+    - name: Create directory to store registry data
+      ansible.builtin.file:
+        state: directory
+        path: /var/lib/registry
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create registry based on container
+      community.docker.docker_container:
+        name: myregistry 
+        state: started
+        image: docker.io/library/registry:latest
+        published_ports: 5000:5000
+        volumes: 
+          - "/var/lib/registry:/var/lib/registry"
+

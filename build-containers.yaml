@@ -1,0 +1,12 @@
+       
+- name: Build image and run container
+  hosts: localhost
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Build apache container image
+      containers.podman.podman_image:
+        name: apache-test:v1
+        path: /home/the_flash/apache-project
+        build:
+          format: docker

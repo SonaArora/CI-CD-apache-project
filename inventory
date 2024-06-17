@@ -1,0 +1,7 @@
+[apache-servers]
+apache-1
+apache-2
+apache-3
+
+[lb]
+lb-server
